@@ -28,6 +28,8 @@ dependencies {
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'junit:junit:4.12'
+	implementation 'junit:junit:4.12'
 
 
 }
