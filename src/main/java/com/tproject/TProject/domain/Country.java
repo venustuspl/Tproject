@@ -8,6 +8,16 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+
+
+@NamedNativeQuery(
+        name = "Country.retriveCountryShortInfoByCode",
+        query = "SELECT * FROM COUNTRY WHERE CODE = :USERCODE ",
+        resultClass = Country.class
+)
+
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,7 +51,7 @@ public class Country {
     private Integer indep_year;
 
     @Column(name = "POPULATION")
-    private Long population;
+    private Integer population;
 
     @Column(name = "LIFE_EXPECTANCY")
     private Double life_expectancy;
@@ -55,7 +65,7 @@ public class Country {
     @Column(name = "LOCAL_NAME")
     private String local_name;
 
-    @Column(name = "GOVERMENT_FORM")
+    @Column(name = "GOVERNMENT_FORM")
     private String government_form;
 
     @Column(name = "HEAD_OF_STATE")

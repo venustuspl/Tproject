@@ -28,5 +28,5 @@ public interface CountryRepository extends CrudRepository<Country, Long> {
     long count();
 
     @Query(nativeQuery = true)
-    List<Country> retriveAllQuestionCountrys(@Param("ID") int questionId);
+    Optional<Country> retriveCountryShortInfoByCode(@Param("USERCODE") String userCode);
 }

@@ -1,5 +1,6 @@
 package com.tproject.TProject.repository;
 
+import com.tproject.TProject.domain.Country;
 import com.tproject.TProject.domain.CountryLanguage;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CountryLanguageRepository extends CrudRepository<CountryLanguage, Long> {
+public interface LanguageRepository extends CrudRepository<CountryLanguage, Long> {
 
     @Override
     public List<CountryLanguage> findAll();
@@ -28,5 +29,5 @@ public interface CountryLanguageRepository extends CrudRepository<CountryLanguag
     long count();
 
     @Query(nativeQuery = true)
-    List<CountryLanguage> retriveAllQuestionCountryLanguages(@Param("ID") int questionId);
+    Optional<CountryLanguage> retriveCountryLanguageByCode(@Param("USERCODE") String userCode);
 }

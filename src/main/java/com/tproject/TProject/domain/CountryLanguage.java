@@ -8,6 +8,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@NamedNativeQuery(
+        name = "CountryLanguage.retriveCountryLanguageByCode",
+        query = "SELECT * FROM COUNTRY_LANGUAGE WHERE COUNTRY_CODE = :USERCODE ",
+        resultClass = CountryLanguage.class
+)
+
+
 @Getter
 @Setter
 @NoArgsConstructor

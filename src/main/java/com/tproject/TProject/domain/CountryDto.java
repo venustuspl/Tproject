@@ -21,7 +21,7 @@ public class CountryDto {
     private String region;
     private Double surface_area;
     private Integer indep_year;
-    private Long population;
+    private Integer population;
     private Double life_expectancy;
     private Double gnp;
     private Double gnp_old;

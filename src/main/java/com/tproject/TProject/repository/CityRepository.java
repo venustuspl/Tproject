@@ -28,7 +28,6 @@ public interface CityRepository extends CrudRepository<City, Long> {
     @Override
     long count();
 
-    @Query(nativeQuery = true)
-    List<City> retriveAllQuestionCitys(@Param("ID") int questionId);
+
 }
 

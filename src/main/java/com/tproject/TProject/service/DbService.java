@@ -4,7 +4,7 @@ import com.tproject.TProject.domain.City;
 import com.tproject.TProject.domain.Country;
 import com.tproject.TProject.domain.CountryLanguage;
 import com.tproject.TProject.repository.CityRepository;
-import com.tproject.TProject.repository.CountryLanguageRepository;
+import com.tproject.TProject.repository.LanguageRepository;
 import com.tproject.TProject.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +23,16 @@ public class DbService {
     private CountryRepository countryRepository;
 
     @Autowired
-    private CountryLanguageRepository countryLanguageRepository;
+    private LanguageRepository languageRepository;
 
     public List<City> getAllCitys() {
 
         return cityRepository.findAll();
     }
 
-   // public List<City> getAllCountryCitys(int id) {
-     //   return cityRepository.retriveAllCountryCitys(id);
-    //}
+    public Optional<Country> getCountryShortInfoByCode(String code) {
+        return countryRepository.retriveCountryShortInfoByCode(code);
+    }
 
     public Optional<City> getCity(Long id) {
 
@@ -48,7 +48,7 @@ public class DbService {
     }
 
 
-    public List<Country> getAllCountrys() {
+    public List<Country> getAllCountries() {
 
         return countryRepository.findAll();
     }
@@ -70,21 +70,23 @@ public class DbService {
 
     public List<CountryLanguage> getAllCountryLanguages() {
 
-        return countryLanguageRepository.findAll();
+        return languageRepository.findAll();
     }
 
     public Optional<CountryLanguage> getCountryLanguage(Long id) {
 
-        return countryLanguageRepository.findById(id);
+        return languageRepository.findById(id);
     }
 
     public CountryLanguage saveCountryLanguage(final CountryLanguage CountryLanguage) {
-        return countryLanguageRepository.save(CountryLanguage);
+        return languageRepository.save(CountryLanguage);
     }
 
     public void deleteCountryLanguage(Long id) {
-        countryLanguageRepository.deleteById(id);
+        languageRepository.deleteById(id);
     }
 
-
+    public Optional<CountryLanguage> getCountryLanguageByCode(String code) {
+        return languageRepository.retriveCountryLanguageByCode(code);
+    }
 }
