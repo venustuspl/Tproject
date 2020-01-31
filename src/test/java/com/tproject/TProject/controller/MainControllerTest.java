@@ -1,5 +1,6 @@
 package com.tproject.TProject.controller;
 
+import com.tproject.TProject.config.DatabaseException;
 import com.tproject.TProject.config.NotFoundCodeException;
 import com.tproject.TProject.controllers.MainController;
 import com.tproject.TProject.domain.CountryDto;
@@ -14,16 +15,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-
-
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(MainController.class)
@@ -39,16 +37,43 @@ public class MainControllerTest {
     private DbService service;
 
     @Test
-    public void getRespond() throws Exception {
+    public void shouldThrowErrorWhenUserPutWrongCountryCode() throws NotFoundCodeException {
+        try {
         //Given
         String userCode = "xxx";
-        when(service.getCountryShortInfoByCode(userCode)).thenReturn(null);
+        when(service.getCountryShortInfoByCode(userCode)).thenReturn(Optional.empty());
         when(modelMapper.map(service.getCountryShortInfoByCode(userCode).orElseThrow(NotFoundCodeException::new), CountryDto.class)).thenThrow(NotFoundCodeException.class);
 
         //When & Then
-        mockMvc.perform(get("/xxx").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
 
+            mockMvc.perform(get("/xxx").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().is5xxServerError());
+        }
+        catch (NotFoundCodeException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    @Test
+    public void shouldThrowErrorWhendatabaseIsDown(){
+        try {
+            //Given
+            String userCode = "xxx";
+            when(service.getCountryShortInfoByCode(userCode)).thenReturn(Optional.empty());
+            when(modelMapper.map(service.getCountryShortInfoByCode(userCode).orElseThrow(NotFoundCodeException::new), CountryDto.class)).thenThrow(NotFoundCodeException.class);
+
+            //When & Then
+
+            mockMvc.perform(get("/xxx").contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().is5xxServerError());
+        }
+        catch (DatabaseException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
