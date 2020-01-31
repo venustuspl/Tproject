@@ -9,13 +9,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 
-
 @NamedNativeQuery(
         name = "Country.retriveCountryShortInfoByCode",
         query = "SELECT * FROM COUNTRY WHERE CODE = :USERCODE ",
         resultClass = Country.class
 )
-
 
 
 @Getter

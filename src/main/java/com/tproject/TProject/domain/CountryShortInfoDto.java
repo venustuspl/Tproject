@@ -24,11 +24,5 @@ public class CountryShortInfoDto {
         this.country_language = countryLanguage.getLanguage();
     }
 
-    /* {
-        "name": "Bahrain"
-        "continent": "Asia"
-        "population":617000
-        "life_expectancy":73
-        "country_language":"Arabic"
-    } */
+
 }

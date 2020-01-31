@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class CountryLanguageDto {
 
-
     private Long id;
     private String country_code;
     private String language;
