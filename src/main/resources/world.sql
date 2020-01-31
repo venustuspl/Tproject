@@ -36,13 +36,13 @@ CREATE TABLE country (
     CONSTRAINT country_continent_check CHECK ((((((((continent = 'Asia'::text) OR (continent = 'Europe'::text)) OR (continent = 'North America'::text)) OR (continent = 'Africa'::text)) OR (continent = 'Oceania'::text)) OR (continent = 'Antarctica'::text)) OR (continent = 'South America'::text)))
 );
 
-CREATE TABLE country_languageTest(
+CREATE TABLE country_language(
     country_code character(3) NOT NULL,
     "language" text NOT NULL,
     is_official boolean NOT NULL,
     percentage real NOT NULL
 );
-COMMIT;
+
 
 COPY city (id, name, country_code, district, population) FROM stdin;
 1	Kabul	AFG	Kabol	1780000
