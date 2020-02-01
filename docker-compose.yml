@@ -1,29 +1,19 @@
-version: '3.1'
+version: '3'                          # wersja docker compose
+services:                             # serwisy jakie sa zarządzane przez bierzący docker compose
+  api:                                # nazwa serwisu (dowolna, unikalna)
+    build: ./  # sciezka do pliku Dockerfile dla tego kontenera
+    ports:
+      - "8080:8080"                   # ustawienie mapowania portu
+    depends_on:                       # zaleznosc - do uruchomienia tego serwisu wymagane wecześniejsze uruchomienie serwisu databases
+      - databases
 
-volumes:
-  database_data:
-    driver: local
-
-services:
-  db:
-    image: postgres:latest
-    restart: always
-    environment:
-      POSTGRES_DB: world-db
-      POSTGRES_USER: world
+  databases:
+    container_name: 'databases'       # nazwa dla kontenera
+    image: postgres                      # obraz bazy danych -> https://hub.docker.com/_/mysql
+    environment:                      # zmienne srodowiskowe zgodne z dokumentacją -> https://hub.docker.com/_/mysql
       POSTGRES_PASSWORD: world123
+      POSTGRES_ROOT_PASSWORD: 1234
+      POSTGRES_DATABASE: world-db
+      POSTGRES_USER: world
     ports:
-      - 5432:5432
-    volumes:
-      - database_data:/var/lib/postgresql/data
-
-  api:
-    build: ./
-    expose:
-      - 8080
-    ports:
-      - 8080:8080
-    volumes:
-      - ./api:/usr/src/app/
-    links:
-      - db
+      - "5442:5442"
