@@ -16,4 +16,4 @@ services:                             # serwisy jakie sa zarządzane przez bierz
       POSTGRES_DATABASE: world-db
       POSTGRES_USER: world
     ports:
-      - "5442:5442"
+      - "5432:5432"
