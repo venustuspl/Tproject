@@ -14,12 +14,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -37,28 +40,15 @@ public class MainControllerTest {
     private DbService service;
 
     @Test
-    public void shouldThrowErrorWhenUserPutWrongCountryCode() throws NotFoundCodeException {
-        try {
-        //Given
-        String userCode = "xxx";
-        when(service.getCountryShortInfoByCode(userCode)).thenReturn(Optional.empty());
-        when(modelMapper.map(service.getCountryShortInfoByCode(userCode).orElseThrow(NotFoundCodeException::new), CountryDto.class)).thenThrow(NotFoundCodeException.class);
+    public void shouldThrowErrorWhenUserPutWrongCountryCode() throws Exception {
 
-        //When & Then
-
-            mockMvc.perform(get("/xxx").contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().is5xxServerError());
-        }
-        catch (NotFoundCodeException e){
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mockMvc.perform(get("/xxx").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("INVALID_COUNTRY_CODE"));
 
     }
 
     @Test
-    public void shouldThrowErrorWhendatabaseIsDown(){
+    public void shouldThrowErrorWhendatabaseIsDown() {
         try {
             //Given
             String userCode = "xxx";
@@ -69,8 +59,7 @@ public class MainControllerTest {
 
             mockMvc.perform(get("/xxx").contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is5xxServerError());
-        }
-        catch (DatabaseException e){
+        } catch (DatabaseException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
